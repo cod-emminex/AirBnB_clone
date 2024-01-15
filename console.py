@@ -32,7 +32,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             n = int(c)
             return n
-        except:
+        except ValueError:
             return c
 
     @staticmethod
@@ -41,7 +41,7 @@ class HBNBCommand(cmd.Cmd):
         try:
             r = inspect.isclass(eval(x))
             return r
-        except:
+        except Exception:
             return False
 
     def do_EOF(self, line):
@@ -301,14 +301,15 @@ class HBNBCommand(cmd.Cmd):
             elif (args[1] == 'count()'):
                 HBNBCommand.handle_def_count(line, cls_name)
             else:
-                cmds = re.split('\(|\"|\)', args[1])
+                cmds = re.split('\\(|\\"|\\)', args[1])
                 cmds = list(filter(lambda s: s != '', cmds))
                 if cmds[0] == 'show':
                     HBNBCommand.handle_def_show(cls_name, cmds[1])
                 elif cmds[0] == 'destroy':
                     HBNBCommand.handle_def_destroy(cls_name, cmds[1])
                 elif cmds[0] == 'update':
-                    cmds = re.split('\(|\"|\)|\{|\'|\}|: |:|, ', args[1])
+                    cmds = re.split
+                    ('\\(|\\"|\\)|\\{|\\\'|\\}|: |:|, ', args[1])
                     cmds = list(filter(lambda s: s != '' and s != ' ', cmds))
                     cmds = list(filter(lambda s: s != ', ', cmds))
                     if (len(cmds) == 4):
