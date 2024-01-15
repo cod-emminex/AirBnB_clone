@@ -54,7 +54,7 @@ class BaseModel():
 
     def to_dict(self):
         """Returns a dictionary containing all keys/values of __dict__"""
-        my_dict = {}
+        my_dict = self.__dict__.copy()
         for k, v in self.__dict__.items():
             if k == 'created_at':
                 my_dict[k] = self.created_at.isoformat()
