@@ -23,30 +23,22 @@ class BaseModel():
         self.updated_at = datetime.now()
         if len(kwargs) > 0:
             for k, v in kwargs.items():
-                if k == 'created_at':
+                if k == 'created_at' or k == 'updated_at':
                     setattr(
                         self,
                         k,
                         datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
                     )
-                elif k == 'updated_at':
-                    setattr(
-                        self,
-                        k,
-                        datetime.strptime(v, '%Y-%m-%dT%H:%M:%S.%f')
-                    )
-                elif k != '__class__':
+                else:
                     setattr(self, k, v)
         else:
             models.storage.new(self)
-
+    
     def __str__(self):
         """Prints [<class name>] (<self.id>) <self.__dict__>"""
-        msg = "[" + str(self.__class__.__name__) + "] "
-        msg += "(" + str(self.id) + ") "
-        msg += str(self.__dict__)
-        return msg
-
+        classname = self.__class__.__name__
+        return "[{}] ({}) {}".format(classname, self.id, self.__dict__)
+    
     def save(self):
         """Updates the updated_at with current datetime."""
         self.updated_at = datetime.now()
