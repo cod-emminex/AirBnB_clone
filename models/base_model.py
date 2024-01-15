@@ -47,10 +47,15 @@ class BaseModel:
         Includes the key/value pair __class__ representing
         the class name of the object.
         """
-        my_dict = self.__dict__.copy()
-        my_dict["created_at"] = self.created_at.isoformat()
-        my_dict["updated_at"] = self.updated_at.isoformat()
-        my_dict["__class__"] = self.__class__.__name__
+        my_dict = {}
+        for k, v in self.__dict__.items():
+            if k == 'created_at':
+                my_dict[k] = self.created_at.isoformat()
+            elif k == 'updated_at':
+                my_dict[k] = self.updated_at.isoformat()
+            else:
+                my_dict[k] = v
+        my_dict['__class__'] = self.__class__.__name__
         return my_dict
 
     def __str__(self):
